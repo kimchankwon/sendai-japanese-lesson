@@ -1,0 +1,773 @@
+<title>仙台 · Japanese in One Hour</title>
+<style>
+  :root{
+    --ground:#10131F; --raised:#1A2033; --raised-2:#222941;
+    --ink:#F4EFE4; --ink-dim:#C6C3BC; --muted:#8A90A8; --hair:#2C3350;
+    --aoba:#5BB89C; --sakura:#E8607F; --sora:#6C8FD6;
+    --murasaki:#A87FD1; --hi:#E8834B; --kin:#E8B84B;
+    --rail:var(--aoba);
+    --f-disp:"Futura","Avenir Next","Helvetica Neue",Arial,sans-serif;
+    --f-jp:"Hiragino Mincho ProN","YuMincho","Yu Mincho","Noto Serif JP","MS Mincho",serif;
+    --f-kana:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",Meiryo,sans-serif;
+    --f-ui:"Helvetica Neue",Arial,sans-serif;
+    --u:clamp(10px,1.35vmin,20px);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:var(--f-ui); overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- deck ---------- */
+  .deck{position:fixed; inset:0}
+  .slide{
+    position:absolute; inset:0; display:none;
+    padding:calc(var(--u)*4) calc(var(--u)*6) calc(var(--u)*7) calc(var(--u)*11);
+    flex-direction:column; justify-content:center;
+  }
+  .slide.on{display:flex}
+
+  /* streamer rail + vertical section name */
+  .slide::before{
+    content:""; position:absolute; left:0; top:0; bottom:0;
+    width:calc(var(--u)*1.1);
+    background:linear-gradient(180deg,var(--rail),color-mix(in oklab,var(--rail) 35%,var(--ground)));
+  }
+  .sec{
+    position:absolute; left:calc(var(--u)*2.6); top:calc(var(--u)*4);
+    writing-mode:vertical-rl; font-family:var(--f-jp);
+    font-size:calc(var(--u)*1.9); letter-spacing:.34em;
+    color:var(--rail); opacity:.85;
+  }
+
+  /* ---------- type ---------- */
+  .eyebrow{
+    font-family:var(--f-ui); font-size:calc(var(--u)*1.25); font-weight:700;
+    letter-spacing:.26em; text-transform:uppercase; color:var(--muted);
+    margin-bottom:calc(var(--u)*2);
+  }
+  h1{
+    font-family:var(--f-disp); font-weight:700; letter-spacing:-.02em;
+    font-size:calc(var(--u)*7.4); line-height:1.02; margin:0; text-wrap:balance;
+  }
+  h2{
+    font-family:var(--f-disp); font-weight:700; letter-spacing:-.015em;
+    font-size:calc(var(--u)*5); line-height:1.08; margin:0 0 calc(var(--u)*2.4);
+    text-wrap:balance;
+  }
+  .lede{
+    font-size:calc(var(--u)*2.5); line-height:1.5; color:var(--ink-dim);
+    max-width:34ch; margin:0;
+  }
+
+  /* ---------- phrase card ---------- */
+  .card{display:flex; flex-direction:column; gap:calc(var(--u)*1.5)}
+  .romaji{
+    font-family:var(--f-disp); font-weight:700; letter-spacing:-.025em;
+    font-size:calc(var(--u)*7.2); line-height:1; color:var(--ink);
+  }
+  .romaji small{
+    font-size:.42em; letter-spacing:.04em; color:var(--muted);
+    font-weight:700; display:inline-block; vertical-align:.55em;
+  }
+  .jp{
+    font-family:var(--f-jp); font-size:calc(var(--u)*4.2); line-height:1.9;
+    color:var(--rail);
+  }
+  .jp ruby rt{
+    font-family:var(--f-kana); font-size:.4em; color:var(--muted);
+    letter-spacing:.04em; font-weight:400;
+  }
+  .en{
+    font-size:calc(var(--u)*2.1); color:var(--ink-dim); letter-spacing:.01em;
+  }
+  .note{
+    margin-top:calc(var(--u)*1.4); font-size:calc(var(--u)*1.6);
+    color:var(--muted); line-height:1.65; max-width:44ch;
+    border-left:2px solid var(--hair); padding-left:calc(var(--u)*1.6);
+  }
+
+  /* ---------- lists / grids ---------- */
+  .toc{list-style:none; margin:0; padding:0; display:grid; gap:calc(var(--u)*1.15);
+       grid-template-columns:1fr 1fr; max-width:78ch}
+  .toc li{
+    display:flex; align-items:baseline; gap:calc(var(--u)*1.6);
+    font-size:calc(var(--u)*2.2); color:var(--ink-dim);
+    padding:calc(var(--u)*.7) 0; border-bottom:1px solid var(--hair);
+  }
+  .toc b{
+    font-family:var(--f-ui); font-variant-numeric:tabular-nums;
+    font-size:calc(var(--u)*1.35); letter-spacing:.14em; color:var(--muted);
+    font-weight:700; min-width:2.4ch;
+  }
+  .toc i{font-family:var(--f-jp); font-style:normal; color:var(--muted); font-size:.86em}
+
+  .bullets{list-style:none; margin:0; padding:0; display:flex;
+           flex-direction:column; gap:calc(var(--u)*2.6); max-width:40ch}
+  .bullets li{font-size:calc(var(--u)*2.7); line-height:1.4; color:var(--ink);
+              padding-left:calc(var(--u)*2.4); position:relative}
+  .bullets li::before{
+    content:""; position:absolute; left:0; top:.62em;
+    width:calc(var(--u)*1.1); height:2px; background:var(--rail);
+  }
+  .bullets span{display:block; font-size:calc(var(--u)*1.75); color:var(--muted);
+                margin-top:calc(var(--u)*.7); line-height:1.6}
+
+  .vocab{
+    list-style:none; margin:calc(var(--u)*2) 0 0; padding:0;
+    display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:calc(var(--u)*1.4) calc(var(--u)*3); max-width:86ch;
+  }
+  .vocab li{
+    border-top:1px solid var(--hair); padding-top:calc(var(--u)*1);
+    font-family:var(--f-disp); font-weight:700; letter-spacing:-.01em;
+    font-size:calc(var(--u)*2.5); color:var(--ink);
+  }
+  .vocab .k{
+    display:block; font-family:var(--f-jp); font-weight:400;
+    font-size:calc(var(--u)*1.9); color:var(--rail); margin-top:.15em;
+  }
+  .vocab .k rt{font-family:var(--f-kana); font-size:.42em; color:var(--muted)}
+  .vocab .g{
+    display:block; font-family:var(--f-ui); font-weight:400;
+    font-size:calc(var(--u)*1.45); color:var(--muted); margin-top:.3em;
+  }
+
+  .chips{display:flex; flex-wrap:wrap; gap:calc(var(--u)*1); margin-top:calc(var(--u)*3)}
+  .chips span{
+    font-family:var(--f-jp); font-size:calc(var(--u)*1.85);
+    padding:calc(var(--u)*.55) calc(var(--u)*1.4);
+    border:1px solid var(--hair); border-radius:999px; color:var(--ink-dim);
+  }
+  .chips span em{font-style:normal; color:var(--muted); font-family:var(--f-ui);
+                 font-size:.72em; margin-left:.6em; letter-spacing:.06em}
+
+
+  /* ---------- fact grid ---------- */
+  .facts{
+    list-style:none; margin:calc(var(--u)*1.4) 0 0; padding:0; display:grid;
+    grid-template-columns:1fr 1fr; gap:calc(var(--u)*2.2) calc(var(--u)*4.5); max-width:88ch;
+  }
+  .facts li{border-top:1px solid var(--hair); padding-top:calc(var(--u)*1.1)}
+  .facts .t{
+    display:block; font-family:var(--f-jp); font-size:calc(var(--u)*2.6);
+    color:var(--rail); line-height:1.5;
+  }
+  .facts .t rt{font-family:var(--f-kana); font-size:.4em; color:var(--muted)}
+  .facts .r{
+    display:block; font-family:var(--f-disp); font-weight:700; letter-spacing:.02em;
+    font-size:calc(var(--u)*1.5); color:var(--ink-dim); margin-top:.15em;
+  }
+  .facts .d{
+    display:block; font-size:calc(var(--u)*1.6); color:var(--muted);
+    line-height:1.6; margin-top:calc(var(--u)*.7); max-width:36ch;
+  }
+
+  /* ---------- practice ---------- */
+  .practice{background:var(--raised)}
+  .practice .tag{
+    display:inline-flex; align-items:center; gap:calc(var(--u)*1.1);
+    font-family:var(--f-ui); font-weight:700; font-size:calc(var(--u)*1.3);
+    letter-spacing:.26em; text-transform:uppercase; color:var(--ground);
+    background:var(--rail); padding:calc(var(--u)*.6) calc(var(--u)*1.5);
+    align-self:flex-start; margin-bottom:calc(var(--u)*3);
+  }
+  .practice .tag b{font-family:var(--f-jp); letter-spacing:.2em; font-weight:400}
+  .task{
+    font-family:var(--f-disp); font-weight:700; letter-spacing:-.015em;
+    font-size:calc(var(--u)*4.6); line-height:1.22; max-width:24ch;
+    margin:0; text-wrap:balance;
+  }
+  .task em{font-style:normal; color:var(--rail)}
+  .pairs{
+    margin-top:calc(var(--u)*3.4); font-size:calc(var(--u)*1.7);
+    color:var(--muted); letter-spacing:.04em;
+  }
+
+  /* ---------- section divider ---------- */
+  .divider{align-items:flex-start}
+  .divider .jptitle{
+    font-family:var(--f-jp); font-size:calc(var(--u)*9); line-height:1.1;
+    color:var(--rail); margin:0 0 calc(var(--u)*1.5); letter-spacing:.08em;
+  }
+  .divider .jptitle rt{font-family:var(--f-kana); font-size:.28em; color:var(--muted)}
+  .divider .sub{
+    font-family:var(--f-disp); font-weight:700; font-size:calc(var(--u)*3.2);
+    letter-spacing:.02em; color:var(--ink);
+  }
+  .divider .count{
+    margin-top:calc(var(--u)*2.6); font-size:calc(var(--u)*1.5);
+    color:var(--muted); letter-spacing:.2em; text-transform:uppercase; font-weight:700;
+  }
+
+  /* ---------- optional slides ---------- */
+  .optional{background:
+    repeating-linear-gradient(135deg,transparent 0 22px,rgba(232,184,75,.028) 22px 44px),
+    var(--ground);}
+  .optional .flag{
+    align-self:flex-start; display:inline-flex; align-items:center; gap:calc(var(--u)*1);
+    border:1px dashed var(--kin); color:var(--kin);
+    padding:calc(var(--u)*.55) calc(var(--u)*1.4); margin-bottom:calc(var(--u)*2.6);
+    font-size:calc(var(--u)*1.25); font-weight:700; letter-spacing:.24em; text-transform:uppercase;
+  }
+  .optional .flag b{font-family:var(--f-jp); font-weight:400; letter-spacing:.16em}
+
+  /* ---------- title slide ---------- */
+  .title{padding-left:calc(var(--u)*11); justify-content:center}
+  .streamers{position:absolute; inset:0; overflow:hidden; pointer-events:none}
+  .streamers i{
+    position:absolute; top:-12%; width:calc(var(--u)*2.4); height:124%;
+    border-radius:999px; opacity:.2; transform-origin:top center;
+    animation:sway 9s ease-in-out infinite;
+  }
+  @keyframes sway{
+    0%,100%{transform:rotate(-1.6deg) translateY(0)}
+    50%{transform:rotate(1.9deg) translateY(calc(var(--u)*-1))}
+  }
+  .title h1{font-size:calc(var(--u)*9.6)}
+  .title .kanji{
+    font-family:var(--f-jp); font-size:calc(var(--u)*13); line-height:1;
+    letter-spacing:.14em; color:var(--kin); margin-bottom:calc(var(--u)*2);
+  }
+  .title .meta{
+    margin-top:calc(var(--u)*3.6); display:flex; gap:calc(var(--u)*3.4);
+    font-size:calc(var(--u)*1.5); color:var(--muted);
+    letter-spacing:.2em; text-transform:uppercase; font-weight:700;
+  }
+
+  /* ---------- chrome ---------- */
+  .bar{position:fixed; left:0; bottom:0; height:3px; background:var(--rail);
+       transition:width .34s cubic-bezier(.4,0,.2,1); z-index:5}
+  .chrome{
+    position:fixed; right:calc(var(--u)*3); bottom:calc(var(--u)*2.4);
+    display:flex; align-items:center; gap:calc(var(--u)*1.4); z-index:5;
+  }
+  .num{font-family:var(--f-ui); font-variant-numeric:tabular-nums;
+       font-size:calc(var(--u)*1.5); color:var(--muted); letter-spacing:.14em}
+  .chrome button{
+    width:calc(var(--u)*3.4); height:calc(var(--u)*3.4);
+    background:transparent; border:1px solid var(--hair); color:var(--muted);
+    border-radius:50%; cursor:pointer; font-size:calc(var(--u)*1.6); line-height:1;
+    display:grid; place-items:center; font-family:var(--f-ui);
+  }
+  .chrome button:hover{border-color:var(--rail); color:var(--rail)}
+  .chrome button:focus-visible{outline:2px solid var(--kin); outline-offset:3px}
+  .hint{
+    position:fixed; left:calc(var(--u)*3.4); bottom:calc(var(--u)*2.6);
+    font-size:calc(var(--u)*1.25); color:var(--hair); letter-spacing:.16em;
+    text-transform:uppercase; font-weight:700; z-index:5;
+  }
+
+  /* ---------- entrance ---------- */
+  .slide.on > *:not(.sec):not(.streamers){animation:rise .46s cubic-bezier(.2,.7,.3,1) backwards}
+  .slide.on > *:nth-child(2){animation-delay:.05s}
+  .slide.on > *:nth-child(3){animation-delay:.12s}
+  .slide.on > *:nth-child(4){animation-delay:.19s}
+  .slide.on > *:nth-child(5){animation-delay:.26s}
+  .card > *{animation:rise .5s cubic-bezier(.2,.7,.3,1) backwards}
+  .card > *:nth-child(2){animation-delay:.11s}
+  .card > *:nth-child(3){animation-delay:.2s}
+  .card > *:nth-child(4){animation-delay:.28s}
+  @keyframes rise{from{opacity:0; transform:translateY(calc(var(--u)*1.4))} to{opacity:1; transform:none}}
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important; transition:none !important}
+  }
+  @media (max-width:760px){
+    .toc{grid-template-columns:1fr}
+    .vocab{grid-template-columns:1fr 1fr}
+    .facts{grid-template-columns:1fr}
+    .slide{padding:calc(var(--u)*3) calc(var(--u)*3) calc(var(--u)*7) calc(var(--u)*9)}
+  }
+</style>
+
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <section class="slide title" style="--rail:var(--kin)">
+    <div class="streamers">
+      <i style="left:8%;  background:var(--sakura); animation-delay:-.4s"></i>
+      <i style="left:15%; background:var(--kin);    animation-delay:-2.1s"></i>
+      <i style="left:23%; background:var(--aoba);   animation-delay:-3.6s"></i>
+      <i style="left:79%; background:var(--sora);   animation-delay:-1.2s"></i>
+      <i style="left:86%; background:var(--murasaki);animation-delay:-4.4s"></i>
+      <i style="left:93%; background:var(--hi);     animation-delay:-2.8s"></i>
+    </div>
+    <div class="kanji">仙台</div>
+    <h1>Japanese in one hour.</h1>
+    <div class="meta"><span>Short-term missions</span><span>18 phrases</span><span>Speak, don't study</span></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide" style="--rail:var(--kin)">
+    <div class="eyebrow">Table of contents</div>
+    <ul class="toc">
+      <li><b>01</b><i>心構え</i>Expectations</li>
+      <li><b>02</b><i>仙台</i>About Sendai</li>
+      <li><b>03</b><i>あいさつ</i>Greetings</li>
+      <li><b>04</b><i>自己紹介</i>Your name</li>
+      <li><b>05</b><i>専攻</i>What you study</li>
+      <li><b>06</b><i>趣味</i>Your hobby</li>
+      <li><b>07</b><i>困ったとき</i>When you're stuck</li>
+      <li><b>08</b><i>教会</i>Church words</li>
+      <li><b>09</b><i>まとめ</i>Put it together</li>
+    </ul>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide" style="--rail:var(--kin)">
+    <div class="sec">心構え</div>
+    <div class="eyebrow">Expectations · 01</div>
+    <h2>Respect comes first.</h2>
+    <ul class="bullets">
+      <li>Be politer with people older than you.<span>Age carries weight here. A small bow and a quiet voice go further than fluent grammar.</span></li>
+      <li>Keep it low-key in public.<span>Trains and shops are quiet. Loud groups read as rude, not friendly.</span></li>
+      <li>Don't push.<span>Confrontation closes doors. Save directness for when it is truly needed.</span></li>
+    </ul>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide" style="--rail:var(--kin)">
+    <div class="sec">心構え</div>
+    <div class="eyebrow">Expectations · 01</div>
+    <h2>The person, not the words.</h2>
+    <ul class="bullets">
+      <li>You will not hold a conversation. That's fine.<span>One hour buys you a warm hello, not fluency. Nobody expects fluency.</span></li>
+      <li>Not knowing is not failing.<span>A stumbled phrase people can hear you trying beats a perfect one you never say.</span></li>
+      <li>Use the translation app freely.<span>Show the screen, point, smile. It is a bridge, not a defeat.</span></li>
+    </ul>
+  </section>
+
+  <!-- Sendai -->
+  <section class="slide" style="--rail:var(--aoba)">
+    <div class="sec">仙台</div>
+    <div class="eyebrow">About Sendai · 02</div>
+    <h2>The city of trees.</h2>
+    <ul class="facts">
+      <li>
+        <span class="t"><ruby>杜<rt>もり</rt></ruby>の<ruby>都<rt>みやこ</rt></ruby></span>
+        <span class="r">Mori no Miyako</span>
+        <span class="d">Sendai's own name for itself. Zelkova trees line the main boulevards; a million people living in a forest.</span>
+      </li>
+      <li>
+        <span class="t"><ruby>伊達政宗<rt>だてまさむね</rt></ruby></span>
+        <span class="r">Date Masamune</span>
+        <span class="d">Founded the city in 1600. Lost an eye to smallpox as a boy — Japan still calls him the One-Eyed Dragon.</span>
+      </li>
+      <li>
+        <span class="t"><ruby>支倉常長<rt>はせくらつねなが</rt></ruby></span>
+        <span class="r">Hasekura Tsunenaga</span>
+        <span class="d">Masamune's samurai envoy. Sailed to Mexico, Spain and Rome in 1613, was baptised there, and came home to a Japan that had banned the faith.</span>
+      </li>
+      <li>
+        <span class="t"><ruby>牛<rt>ぎゅう</rt></ruby>タン</span>
+        <span class="r">Gyuutan</span>
+        <span class="d">Grilled beef tongue. Invented here in 1948 by a Sendai chef with scarce ingredients. Now the thing the city is famous for.</span>
+      </li>
+      <li>
+        <span class="t">ずんだ<ruby>餅<rt>もち</rt></ruby></span>
+        <span class="r">Zunda mochi</span>
+        <span class="d">Rice cakes under sweet, bright-green mashed edamame. Tastes nothing like it looks. Try it.</span>
+      </li>
+      <li>
+        <span class="t"><ruby>七夕<rt>たなばた</rt></ruby>まつり</span>
+        <span class="r">Tanabata matsuri</span>
+        <span class="d">Every August, the arcades fill with paper streamers three storeys long. The biggest Tanabata festival in Japan.</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide divider" style="--rail:var(--aoba)">
+    <div class="jptitle">あいさつ</div>
+    <div class="sub">Greetings</div>
+    <div class="count">03 · four phrases</div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide" style="--rail:var(--aoba)">
+    <div class="sec">あいさつ</div>
+    <div class="card">
+      <div class="romaji">Konnichiwa</div>
+      <div class="jp">こんにちは</div>
+      <div class="en">Hello · Good afternoon</div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide" style="--rail:var(--aoba)">
+    <div class="sec">あいさつ</div>
+    <div class="card">
+      <div class="romaji">Arigatou gozaimasu</div>
+      <div class="jp">ありがとうございます</div>
+      <div class="en">Thank you</div>
+    </div>
+    <div class="note">Say the long <b>o</b>: a-ri-ga-<b>too</b>. Drop <em>gozaimasu</em> only with people your own age.</div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide" style="--rail:var(--aoba)">
+    <div class="sec">あいさつ</div>
+    <div class="card">
+      <div class="romaji">Sumimasen</div>
+      <div class="jp">すみません</div>
+      <div class="en">Excuse me · Sorry · Thank you</div>
+    </div>
+    <div class="note">Your workhorse. Getting attention, squeezing past someone, apologising, and thanking a stranger — all one word.</div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide" style="--rail:var(--aoba)">
+    <div class="sec">あいさつ</div>
+    <div class="card">
+      <div class="romaji">Hai <small>/</small> Iie</div>
+      <div class="jp">はい　・　いいえ</div>
+      <div class="en">Yes · No</div>
+    </div>
+    <div class="note"><b>Iie</b> is blunt on its own. To decline something, <b>daijoubu desu</b> (だいじょうぶです) is softer.</div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide practice" style="--rail:var(--aoba)">
+    <div class="sec">練習</div>
+    <div class="tag">Pair practice <b>ペア</b></div>
+    <p class="task">Greet your partner. Thank them. Then <em>get a stranger's attention</em> across the room.</p>
+    <div class="pairs">Swap roles · Stand up · No looking at the slide</div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide divider" style="--rail:var(--sakura)">
+    <div class="jptitle"><ruby>自己紹介<rt>じこしょうかい</rt></ruby></div>
+    <div class="sub">Your name</div>
+    <div class="count">04 · two phrases</div>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide" style="--rail:var(--sakura)">
+    <div class="sec">自己紹介</div>
+    <div class="card">
+      <div class="romaji">Onamae wa nan desu ka?</div>
+      <div class="jp">お<ruby>名前<rt>なまえ</rt></ruby>は<ruby>何<rt>なん</rt></ruby>ですか</div>
+      <div class="en">What is your name?</div>
+    </div>
+    <div class="note">The <b>o-</b> is the politeness. Don't add <em>anata</em> — to a stranger it lands cold.</div>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide" style="--rail:var(--sakura)">
+    <div class="sec">自己紹介</div>
+    <div class="card">
+      <div class="romaji">Watashi no namae wa <small>___</small> desu</div>
+      <div class="jp"><ruby>私<rt>わたし</rt></ruby>の<ruby>名前<rt>なまえ</rt></ruby>はまるまるです</div>
+      <div class="en">My name is ___</div>
+    </div>
+    <div class="note">Shorter and just as good: <b>Watashi wa ___ desu.</b> まるまる (maru maru) is how Japanese says "blah blah" — the blank you fill in.</div>
+  </section>
+
+  <!-- 14 -->
+  <section class="slide practice" style="--rail:var(--sakura)">
+    <div class="sec">練習</div>
+    <div class="tag">Pair practice <b>ペア</b></div>
+    <p class="task">Ask your partner's name. Answer with <em>your own</em>. Then swap.</p>
+    <div class="pairs">Then find a new partner and do it again</div>
+  </section>
+
+  <!-- 15 -->
+  <section class="slide divider" style="--rail:var(--sora)">
+    <div class="jptitle"><ruby>専攻<rt>せんこう</rt></ruby></div>
+    <div class="sub">What you study</div>
+    <div class="count">05 · two phrases</div>
+  </section>
+
+  <!-- 16 -->
+  <section class="slide" style="--rail:var(--sora)">
+    <div class="sec">専攻</div>
+    <div class="card">
+      <div class="romaji">Senkou wa nan desu ka?</div>
+      <div class="jp"><ruby>専攻<rt>せんこう</rt></ruby>は<ruby>何<rt>なん</rt></ruby>ですか</div>
+      <div class="en">What is your major?</div>
+    </div>
+    <div class="note">Working, not studying? <b>Oshigoto wa nan desu ka</b> (お<ruby>仕事<rt>しごと</rt></ruby>は<ruby>何<rt>なん</rt></ruby>ですか) — what's your job?</div>
+  </section>
+
+  <!-- 17 -->
+  <section class="slide" style="--rail:var(--sora)">
+    <div class="sec">専攻</div>
+    <div class="card">
+      <div class="romaji">Senkou wa <small>___</small> desu</div>
+      <div class="jp"><ruby>専攻<rt>せんこう</rt></ruby>はまるまるです</div>
+      <div class="en">My major is ___</div>
+    </div>
+    <ul class="vocab">
+      <li>Kougaku<span class="k"><ruby>工学<rt>こうがく</rt></ruby></span><span class="g">engineering</span></li>
+      <li>Kango<span class="k"><ruby>看護<rt>かんご</rt></ruby></span><span class="g">nursing</span></li>
+      <li>Bijinesu<span class="k">ビジネス</span><span class="g">business</span></li>
+      <li>Kyouiku<span class="k"><ruby>教育<rt>きょういく</rt></ruby></span><span class="g">education</span></li>
+      <li>Ongaku<span class="k"><ruby>音楽<rt>おんがく</rt></ruby></span><span class="g">music</span></li>
+      <li>Konpyuuta<span class="k">コンピューター</span><span class="g">computing</span></li>
+    </ul>
+  </section>
+
+  <!-- 18 -->
+  <section class="slide practice" style="--rail:var(--sora)">
+    <div class="sec">練習</div>
+    <div class="tag">Pair practice <b>ペア</b></div>
+    <p class="task">Ask what your partner studies. Answer with your <em>real</em> major.</p>
+    <div class="pairs">Not on the list? Say it in English inside the Japanese sentence</div>
+  </section>
+
+  <!-- 19 -->
+  <section class="slide divider" style="--rail:var(--murasaki)">
+    <div class="jptitle"><ruby>趣味<rt>しゅみ</rt></ruby></div>
+    <div class="sub">Your hobby</div>
+    <div class="count">06 · two phrases</div>
+  </section>
+
+  <!-- 20 -->
+  <section class="slide" style="--rail:var(--murasaki)">
+    <div class="sec">趣味</div>
+    <div class="card">
+      <div class="romaji">Shumi wa nan desu ka?</div>
+      <div class="jp"><ruby>趣味<rt>しゅみ</rt></ruby>は<ruby>何<rt>なん</rt></ruby>ですか</div>
+      <div class="en">What is your hobby?</div>
+    </div>
+    <div class="note">The friendliest question on this list. It opens almost any conversation in Japan.</div>
+  </section>
+
+  <!-- 21 -->
+  <section class="slide" style="--rail:var(--murasaki)">
+    <div class="sec">趣味</div>
+    <div class="card">
+      <div class="romaji">Shumi wa <small>___</small> desu</div>
+      <div class="jp"><ruby>趣味<rt>しゅみ</rt></ruby>はまるまるです</div>
+      <div class="en">My hobby is ___</div>
+    </div>
+    <ul class="vocab">
+      <li>Ongaku<span class="k"><ruby>音楽<rt>おんがく</rt></ruby></span><span class="g">music</span></li>
+      <li>Supootsu<span class="k">スポーツ</span><span class="g">sports</span></li>
+      <li>Dokusho<span class="k"><ruby>読書<rt>どくしょ</rt></ruby></span><span class="g">reading</span></li>
+      <li>Ryouri<span class="k"><ruby>料理<rt>りょうり</rt></ruby></span><span class="g">cooking</span></li>
+      <li>Ryokou<span class="k"><ruby>旅行<rt>りょこう</rt></ruby></span><span class="g">travel</span></li>
+      <li>Shashin<span class="k"><ruby>写真<rt>しゃしん</rt></ruby></span><span class="g">photography</span></li>
+    </ul>
+    <div class="chips">
+      <span>牛タン<em>gyuutan · Sendai beef tongue</em></span>
+      <span>ずんだ<ruby>餅<rt>もち</rt></ruby><em>zunda mochi</em></span>
+    </div>
+  </section>
+
+  <!-- 22 -->
+  <section class="slide practice" style="--rail:var(--murasaki)">
+    <div class="sec">練習</div>
+    <div class="tag">Pair practice <b>ペア</b></div>
+    <p class="task">Ask your partner's hobby. Answer. Then ask <em>a second person</em>.</p>
+    <div class="pairs">Bonus · react with いいですね (ii desu ne) — "nice!"</div>
+  </section>
+
+  <!-- 23 -->
+  <section class="slide divider" style="--rail:var(--hi)">
+    <div class="jptitle"><ruby>困<rt>こま</rt></ruby>ったとき</div>
+    <div class="sub">When you're stuck</div>
+    <div class="count">07 · four phrases</div>
+  </section>
+
+  <!-- 24 -->
+  <section class="slide" style="--rail:var(--hi)">
+    <div class="sec">困ったとき</div>
+    <div class="card">
+      <div class="romaji">Toire wa doko desu ka?</div>
+      <div class="jp">トイレはどこですか</div>
+      <div class="en">Where is the toilet?</div>
+    </div>
+    <div class="note">Swap in any place: <b>eki</b> (<ruby>駅<rt>えき</rt></ruby>) station, <b>konbini</b> (コンビニ) convenience store.</div>
+  </section>
+
+  <!-- 25 -->
+  <section class="slide" style="--rail:var(--hi)">
+    <div class="sec">困ったとき</div>
+    <div class="card">
+      <div class="romaji">Nihongo ga wakarimasen</div>
+      <div class="jp"><ruby>日本語<rt>にほんご</rt></ruby>がわかりません</div>
+      <div class="en">I don't understand Japanese</div>
+    </div>
+    <div class="note">Lead with <b>Sumimasen</b>. This one sentence resets a conversation that has run away from you.</div>
+  </section>
+
+  <!-- 26 -->
+  <section class="slide" style="--rail:var(--hi)">
+    <div class="sec">困ったとき</div>
+    <div class="card">
+      <div class="romaji">Mou ichido onegaishimasu</div>
+      <div class="jp">もう<ruby>一度<rt>いちど</rt></ruby>お<ruby>願<rt>ねが</rt></ruby>いします</div>
+      <div class="en">One more time, please</div>
+    </div>
+    <div class="note">Add <b>yukkuri</b> (ゆっくり) in front for "slowly, one more time please."</div>
+  </section>
+
+  <!-- 27 -->
+  <section class="slide" style="--rail:var(--hi)">
+    <div class="sec">困ったとき</div>
+    <div class="card">
+      <div class="romaji">Eigo ga hanasemasu ka?</div>
+      <div class="jp"><ruby>英語<rt>えいご</rt></ruby>が<ruby>話<rt>はな</rt></ruby>せますか</div>
+      <div class="en">Can you speak English?</div>
+    </div>
+    <div class="note">Ask it in Japanese, never in English. Asking in Japanese is the courtesy.</div>
+  </section>
+
+  <!-- 28 -->
+  <section class="slide practice" style="--rail:var(--hi)">
+    <div class="sec">練習</div>
+    <div class="tag">Pair practice <b>ペア</b></div>
+    <p class="task">Your partner speaks only Japanese, fast. <em>Slow them down</em>, then find the toilet.</p>
+    <div class="pairs">Partner: speak real Japanese or gibberish — just keep going</div>
+  </section>
+
+  <!-- 29 -->
+  <section class="slide divider" style="--rail:var(--kin)">
+    <div class="jptitle"><ruby>教会<rt>きょうかい</rt></ruby>のことば</div>
+    <div class="sub">Church words</div>
+    <div class="count">08 · four phrases</div>
+  </section>
+
+  <!-- 30 -->
+  <section class="slide" style="--rail:var(--kin)">
+    <div class="sec">教会</div>
+    <div class="eyebrow">Recognise these when you hear them</div>
+    <ul class="vocab" style="grid-template-columns:repeat(3,1fr)">
+      <li>Kamisama<span class="k"><ruby>神様<rt>かみさま</rt></ruby></span><span class="g">God</span></li>
+      <li>Iesusama<span class="k">イエス<ruby>様<rt>さま</rt></ruby></span><span class="g">Jesus</span></li>
+      <li>Kyoukai<span class="k"><ruby>教会<rt>きょうかい</rt></ruby></span><span class="g">church</span></li>
+    </ul>
+    <div class="note" style="margin-top:calc(var(--u)*3.6)">The <b>-sama</b> is the highest honorific in Japanese. It is not optional on these two names.</div>
+  </section>
+
+  <!-- 31 -->
+  <section class="slide" style="--rail:var(--kin)">
+    <div class="sec">教会</div>
+    <div class="card">
+      <div class="romaji">Watashi wa kurisuchan desu</div>
+      <div class="jp"><ruby>私<rt>わたし</rt></ruby>はクリスチャンです</div>
+      <div class="en">I am a Christian</div>
+    </div>
+    <div class="note">Roughly 1% of Japan is Christian. Expect curiosity, not argument — this sentence is usually the start of a good conversation.</div>
+  </section>
+
+  <!-- 32 -->
+  <section class="slide practice" style="--rail:var(--kin)">
+    <div class="sec">練習</div>
+    <div class="tag">Everything <b>まとめ</b></div>
+    <p class="task">Greet. Name. Major. Hobby. And that you're a Christian. <em>No notes.</em></p>
+    <div class="pairs">Then do it once more with someone you haven't practised with</div>
+  </section>
+
+  <!-- 33 -->
+  <section class="slide" style="--rail:var(--aoba)">
+    <div class="sec">まとめ</div>
+    <div class="eyebrow">You now have</div>
+    <h2>Eighteen phrases and a way in.</h2>
+    <ul class="bullets">
+      <li>Sumimasen opens the door.<span>Then your name, your major, your hobby — that is a real introduction.</span></li>
+      <li>When it breaks, you have an exit.<span>Wakarimasen, mou ichido, eigo ga hanasemasu ka.</span></li>
+      <li>The phrase is the greeting. You are the message.<span>They will remember that you tried, long after they forget your grammar.</span></li>
+    </ul>
+    <div class="chips">
+      <span><ruby>七夕<rt>たなばた</rt></ruby><em>Sendai's summer festival</em></span>
+      <span><ruby>青葉城<rt>あおばじょう</rt></ruby><em>Aoba castle</em></span>
+      <span><ruby>瑞鳳殿<rt>ずいほうでん</rt></ruby><em>Zuihoden</em></span>
+      <span><ruby>杜<rt>もり</rt></ruby>の<ruby>都<rt>みやこ</rt></ruby><em>"city of trees" — Sendai</em></span>
+    </div>
+  </section>
+
+  <!-- 34 -->
+  <section class="slide optional" style="--rail:var(--kin)">
+    <div class="sec">任意</div>
+    <div class="flag">If time <b>任意</b></div>
+    <div class="card">
+      <div class="romaji">Issho ni kyoukai ni ikimasen ka?</div>
+      <div class="jp"><ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>教会<rt>きょうかい</rt></ruby>に<ruby>行<rt>い</rt></ruby>きませんか</div>
+      <div class="en">Would you like to go to church together?</div>
+    </div>
+    <div class="note">The negative <em>-masen ka</em> is what makes it an invitation rather than a demand. Only use it once you actually know the person.</div>
+  </section>
+
+  <!-- 35 -->
+  <section class="slide optional" style="--rail:var(--kin)">
+    <div class="sec">任意</div>
+    <div class="flag">If time <b>任意</b></div>
+    <div class="card">
+      <div class="romaji">Issho ni inorimashou</div>
+      <div class="jp"><ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>祈<rt>いの</rt></ruby>りましょう</div>
+      <div class="en">Let's pray together</div>
+    </div>
+    <div class="note">Ask first. <b>Inotte mo ii desu ka</b> (<ruby>祈<rt>いの</rt></ruby>ってもいいですか) — "may I pray?" — is the safer opening with someone you've just met.</div>
+  </section>
+
+  <!-- 36 -->
+  <section class="slide optional" style="--rail:var(--kin)">
+    <div class="sec">任意</div>
+    <div class="flag">If time <b>任意</b></div>
+    <div class="eyebrow">Words you'll hear in a Japanese service</div>
+    <ul class="vocab">
+      <li>Ai<span class="k"><ruby>愛<rt>あい</rt></ruby></span><span class="g">love</span></li>
+      <li>Inori<span class="k"><ruby>祈<rt>いの</rt></ruby>り</span><span class="g">prayer</span></li>
+      <li>Seisho<span class="k"><ruby>聖書<rt>せいしょ</rt></ruby></span><span class="g">the Bible</span></li>
+      <li>Shukufuku<span class="k"><ruby>祝福<rt>しゅくふく</rt></ruby></span><span class="g">blessing</span></li>
+      <li>Sanbi<span class="k"><ruby>賛美<rt>さんび</rt></ruby></span><span class="g">worship, praise</span></li>
+      <li>Megumi<span class="k"><ruby>恵<rt>めぐ</rt></ruby>み</span><span class="g">grace</span></li>
+    </ul>
+  </section>
+
+</div>
+
+<div class="bar" id="bar"></div>
+<div class="hint">← → to move · F for fullscreen</div>
+<div class="chrome">
+  <span class="num" id="num">1 / 37</span>
+  <button id="prev" aria-label="Previous slide">‹</button>
+  <button id="next" aria-label="Next slide">›</button>
+</div>
+
+<script>
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var bar = document.getElementById('bar');
+  var num = document.getElementById('num');
+  var i = 0;
+
+  function show(n){
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function(s, k){ s.classList.toggle('on', k === i); });
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+    bar.style.background = getComputedStyle(slides[i]).getPropertyValue('--rail');
+    num.textContent = (i + 1) + ' / ' + slides.length;
+    try { history.replaceState(null, '', '#' + (i + 1)); } catch (e) {}
+  }
+
+  document.addEventListener('keydown', function(e){
+    var k = e.key;
+    if (k === 'ArrowRight' || k === 'ArrowDown' || k === ' ' || k === 'PageDown'){ e.preventDefault(); show(i + 1); }
+    else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'PageUp'){ e.preventDefault(); show(i - 1); }
+    else if (k === 'Home'){ e.preventDefault(); show(0); }
+    else if (k === 'End'){ e.preventDefault(); show(slides.length - 1); }
+    else if (k === 'f' || k === 'F'){
+      if (document.fullscreenElement) document.exitFullscreen();
+      else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+    }
+  });
+
+  document.getElementById('next').addEventListener('click', function(){ show(i + 1); });
+  document.getElementById('prev').addEventListener('click', function(){ show(i - 1); });
+
+  var x0 = null;
+  document.addEventListener('touchstart', function(e){ x0 = e.changedTouches[0].clientX; }, {passive:true});
+  document.addEventListener('touchend', function(e){
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 55) show(i + (dx < 0 ? 1 : -1));
+    x0 = null;
+  }, {passive:true});
+
+  var start = parseInt((location.hash || '').slice(1), 10);
+  show(isNaN(start) ? 0 : start - 1);
+</script>
