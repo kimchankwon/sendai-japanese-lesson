@@ -48,3 +48,22 @@ marked so the teacher can see at a glance that it is optional. _Avoid_: "appendi
 ## Core Eighteen
 The 18 phrases drilled inside the hour. Fixed count: cutting a phrase is how a new phrase gets
 added, so that repetition time is never silently traded away for coverage.
+
+## Content Block
+The plain-text `<script id="content">` region of `index.html` holding every word in the
+Deck. It is the source of truth: the Deck is rendered from it at load, and Save File
+writes the edited model back into it. No HTML lives here. _Avoid_: "the data", "config".
+
+## Furigana Braces
+The authoring syntax `漢字{かんじ}` in the Content Block, rendered to `<ruby>` at load.
+Chosen so a non-technical editor can add readings without touching markup.
+
+## Edit Mode
+The state entered with `E`, in which every Phrase Card line and list cell becomes directly
+typeable on the slide. Editable elements show their **raw** Content Block text — braces and
+asterisks visible — never the rendered form, so what is typed is what is stored.
+
+## Save File
+The export from Edit Mode: serialises the in-memory model back into Content Block syntax,
+splices it into a clone of the page, and downloads a complete replacement `index.html`.
+_Avoid_: "publish", "deploy" — it downloads a file; committing it is a separate act.
