@@ -13,12 +13,24 @@ in a classroom with no wifi.
 | --- | --- |
 | `→` `←` / space | Next / previous slide |
 | `F` | Fullscreen |
+| `C` | Cheat sheet |
 | `E` | Edit mode |
 | `S` | Download an updated `index.html` with your edits |
 | `R` | Discard local edits |
 | `Home` / `End` | First / last slide |
 
 Swipe works on touch. The URL hash tracks the slide, so `#12` deep-links.
+
+## The cheat sheet
+
+A second view of the same deck at `#sheet` — every phrase in one scrolling, printable
+page, grouped by section. It is linked from the title slide and from the closing
+reminders slide, reachable with `C` from anywhere, and has a Print button that switches
+to black-on-white in two columns.
+
+It is **generated from the same content block as the slides**, so it cannot fall out of
+step with them. Add a phrase to the deck and it appears on the sheet; there is no second
+copy to maintain. Any slide can link to it by adding `link: <button label>`.
 
 ## Editing the lesson
 
@@ -53,6 +65,7 @@ Furigana is `漢字{かんじ}`, which renders as ruby text above the kanji. `**
 `*highlight*` and `___` (a styled blank) also work.
 
 Types: `title` `toc` `bullets` `facts` `divider` `phrase` `practice` `vocab`.
+`link: <label>` on any slide adds a button through to the cheat sheet.
 Colours: `aoba` `sakura` `sora` `murasaki` `hi` `kin`.
 Add `opt: yes` to mark a slide optional.
 

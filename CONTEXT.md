@@ -80,3 +80,15 @@ stylesheet sets a px font-size, so one number changes the whole Deck's scale.
 The measure-and-shrink pass run on a Slide when it becomes visible: if its content is taller
 than the Slide, `--u` is scaled down until it fits, then left alone. Sparse Slides therefore
 render at full size and dense ones only give up what they must. It never scales *up*.
+
+## Cheat Sheet
+The second view of the Deck, routed at `#sheet`: every Phrase Card in one scrolling,
+printable page grouped by section. It is *derived* from the same Content Block the slides
+render from and holds no copy of its own, so it cannot drift. Reached by `C`, or from any
+Slide carrying a `link:` field. _Avoid_: "handout", "reference page" — and never let it
+become a second place phrases are written down.
+
+## Route
+The part of the URL hash that selects a view: a slide number, or `sheet`. It must be read
+once before the first render, because `show()` rewrites the hash as soon as a slide is
+displayed. Two separate bugs have come from reading it later.

@@ -242,6 +242,91 @@
   body.editing .deck, body.editing .chrome, body.editing .hint{top:calc(var(--u)*4.2)}
   body.editing .chrome, body.editing .hint{top:auto}
 
+  /* ---------- jump link on a slide ---------- */
+  .jump{
+    align-self:flex-start; margin-top:calc(var(--u)*3.2);
+    display:inline-flex; align-items:center; gap:.6em; text-decoration:none;
+    font-family:var(--f-ui); font-weight:700; font-size:calc(var(--u)*1.6);
+    letter-spacing:.18em; text-transform:uppercase;
+    color:var(--rail); border:1px solid var(--rail);
+    padding:calc(var(--u)*.85) calc(var(--u)*1.8); border-radius:999px;
+  }
+  .jump:hover{background:var(--rail); color:var(--ground)}
+  .jump:focus-visible{outline:2px solid var(--kin); outline-offset:3px}
+  .jump .arw{font-size:1.1em; letter-spacing:0}
+  body.editing .jump{border-style:dashed}
+
+  /* ---------- cheat sheet ---------- */
+  .sheet{position:fixed; inset:0; overflow-y:auto; background:var(--ground);
+         display:none; z-index:10; padding:0 0 6vh}
+  body.sheet-open{overflow:auto}
+  body.sheet-open .sheet{display:block}
+  body.sheet-open .deck,body.sheet-open .bar,
+  body.sheet-open .chrome,body.sheet-open .hint{display:none}
+  .sheet-top{
+    position:sticky; top:0; z-index:2; background:var(--ground);
+    border-bottom:1px solid var(--hair);
+    display:flex; align-items:baseline; gap:1.4rem; flex-wrap:wrap;
+    padding:1.5rem clamp(1.2rem,4vw,4rem);
+  }
+  .sheet-top h1{
+    font-family:var(--f-disp); font-size:clamp(1.5rem,2.6vw,2.2rem);
+    letter-spacing:-.01em; margin:0; color:var(--ink); flex:1 1 auto;
+  }
+  .sheet-top .kj{font-family:var(--f-jp); color:var(--kin); margin-right:.5em}
+  .sheet-top a,.sheet-top button{
+    font-family:var(--f-ui); font-weight:700; font-size:.78rem; letter-spacing:.18em;
+    text-transform:uppercase; text-decoration:none; cursor:pointer;
+    color:var(--muted); background:transparent; border:1px solid var(--hair);
+    border-radius:999px; padding:.5rem 1.1rem;
+  }
+  .sheet-top a:hover,.sheet-top button:hover{color:var(--aoba); border-color:var(--aoba)}
+  .sheet-top a:focus-visible,.sheet-top button:focus-visible{outline:2px solid var(--kin); outline-offset:2px}
+  .sheet-body{
+    padding:2rem clamp(1.2rem,4vw,4rem) 0;
+    columns:23rem 3; column-gap:clamp(1.6rem,3vw,3.2rem);
+  }
+  .grp{break-inside:avoid; border-top:2px solid var(--rail);
+       padding-top:.9rem; margin:0 0 2.1rem}
+  .grp h2{
+    font-family:var(--f-disp); font-size:1.02rem; letter-spacing:.16em;
+    text-transform:uppercase; margin:0 0 1rem; color:var(--rail);
+  }
+  .grp h2 .kj{font-family:var(--f-jp); letter-spacing:.1em; text-transform:none;
+               color:var(--muted); margin-left:.7em; font-size:1.05em}
+  .grp.opt{border-top-style:dashed}
+  .grp.opt h2::after{content:" · if time"; color:var(--muted); letter-spacing:.1em}
+  .ph{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:1rem}
+  .ph li{display:grid; gap:.12rem; break-inside:avoid}
+  .ph .r{font-family:var(--f-disp); font-weight:700; font-size:1.12rem;
+         letter-spacing:-.005em; color:var(--ink); line-height:1.25}
+  .ph .r small{font-size:.7em; color:var(--muted)}
+  .ph .j{font-family:var(--f-jp); font-size:1.18rem; color:var(--rail); line-height:1.85}
+  .ph .j rt{font-family:var(--f-kana); font-size:.42em; color:var(--muted)}
+  .ph .e{font-size:.9rem; color:var(--muted); line-height:1.4}
+  .wl{list-style:none; margin:1.1rem 0 0; padding:.9rem 0 0; border-top:1px solid var(--hair);
+      display:grid; grid-template-columns:1fr 1fr; gap:.55rem 1rem}
+  .wl li{font-size:.86rem; color:var(--muted); line-height:1.45; break-inside:avoid}
+  .wl b{display:block; font-family:var(--f-jp); font-weight:400;
+        font-size:1.02rem; color:var(--ink-dim)}
+  .wl b rt{font-family:var(--f-kana); font-size:.42em; color:var(--muted)}
+
+  @media print{
+    body{background:#fff; color:#111; overflow:visible}
+    body.sheet-open .sheet{position:static; background:#fff}
+    .sheet-top{position:static; border-color:#bbb; padding-left:0; padding-right:0}
+    .sheet-top a,.sheet-top button{display:none}
+    .sheet-top h1{color:#111}
+    .sheet-body{columns:2; column-gap:2rem; padding:1rem 0 0}
+    .grp{margin:0 0 1.4rem; border-top-color:#111}
+    .grp h2,.ph .j,.ph .j rt{color:#111}
+    .ph .r{color:#000}
+    .ph .e,.wl li,.wl b rt{color:#444}
+    .wl b{color:#111}
+    .wl{border-top-color:#bbb}
+    @page{margin:14mm}
+  }
+
   .fatal{padding:calc(var(--u)*6); font-family:var(--f-mono); line-height:1.8;
          font-size:calc(var(--u)*1.7); color:var(--sakura)}
   .fatal h3{font-family:var(--f-ui); color:var(--ink); font-size:calc(var(--u)*3)}
@@ -263,6 +348,10 @@
   Emphasis:  **bold**  and  *highlight*
   Blanks:    ___  renders as a styled blank
 
+  Add  link: <label>  to any slide for a button through to the cheat sheet.
+  The cheat sheet builds itself from the phrases below — there is nothing
+  separate to keep in step.
+
   Types:   title  toc  bullets  facts  divider  phrase  practice  vocab
   Colours: aoba (green) sakura (pink) sora (blue) murasaki (violet)
            hi (orange) kin (gold)
@@ -278,6 +367,7 @@
 kanji: 仙台
 h1: Sendai Mission 2026
 sub: Japanese Lesson
+link: Cheat sheet
 
 === toc | kin
 eyebrow: Table of contents
@@ -548,6 +638,7 @@ h2: Before you go.
 - Bow slightly and speak quietly. | Especially with people older than you.
 - Mistakes are fine. | People respond to the effort.
 - Keep your phone ready. | Show the screen and point when you get stuck.
+link: Take the cheat sheet with you
 
 === phrase | kin
 opt: yes
@@ -589,8 +680,17 @@ eyebrow: Words you will hear in a Japanese service
 </div>
 
 <div class="deck" id="deck"></div>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-top">
+    <h1><span class="kj">仙台</span><span id="sheetTitle"></span></h1>
+    <button id="btnPrint">Print</button>
+    <a href="#1" id="btnBack">Back to slides</a>
+  </div>
+  <div class="sheet-body" id="sheetBody"></div>
+</div>
 <div class="bar" id="bar"></div>
-<div class="hint" id="hint">← → move · E edit · F fullscreen</div>
+<div class="hint" id="hint">← → move · C cheat sheet · E edit · F fullscreen</div>
 <div class="chrome">
   <span class="num" id="num"></span>
   <button id="prev" aria-label="Previous slide">‹</button>
@@ -602,7 +702,8 @@ eyebrow: Words you will hear in a Japanese service
   'use strict';
   var KEY = 'sendai-deck-v1';
   /* read before any render — show() rewrites the hash */
-  var START = parseInt((location.hash || '').slice(1), 10);
+  var START_ROUTE = (location.hash || '').slice(1);
+  var START = parseInt(START_ROUTE, 10);
   var SRC  = document.getElementById('content');
   var DECK = document.getElementById('deck');
   var model = [], i = 0, editing = false, dirty = false;
@@ -692,6 +793,14 @@ eyebrow: Words you will hear in a Japanese service
     return '<div class="streamers">' + out + '</div>';
   }
 
+  function jumpHTML(si){
+    var raw = model[si].f.link || '';
+    if(editing)
+      return '<div class="jump" data-i="' + si + '" data-f="link"' + ce('Link label') + '>' +
+             esc(raw) + '</div>';
+    return '<a class="jump" href="#sheet">' + inline(raw) + '<span class="arw">\u2192</span></a>';
+  }
+
   function chrome(si){
     var s = model[si], out = '';
     if(s.f.flag){
@@ -774,6 +883,73 @@ eyebrow: Words you will hear in a Japanese service
     }
   };
 
+  /* ---------------- cheat sheet ----------------
+     Built from `model`, so it can never drift from the Content Block. */
+  function groups(){
+    var out = [], cur = null;
+    model.forEach(function(s){
+      var isOpt = !!s.f.opt;
+      if(s.type === 'divider'){
+        cur = {title: s.f.sub || '', jp: s.f.jp || '', rail: s.rail, opt: false,
+               items: [], words: []};
+        out.push(cur); return;
+      }
+      if(s.type !== 'phrase' && s.type !== 'vocab') return;
+      if(!cur || isOpt !== cur.opt){
+        cur = {title: isOpt ? 'Extra phrases' : (cur ? cur.title : 'Phrases'),
+               jp: isOpt ? '任意' : '', rail: s.rail, opt: isOpt, items: [], words: []};
+        out.push(cur);
+      }
+      if(s.type === 'phrase')
+        cur.items.push([s.f.romaji || '', s.f.jp || '', s.f.en || '']);
+      else
+        (s.L.items || []).forEach(function(r){ cur.items.push([r[0]||'', r[1]||'', r[2]||'']); });
+      (s.L.vocab || []).forEach(function(r){ cur.words.push(r); });
+    });
+    return out.filter(function(g){ return g.items.length; });
+  }
+
+  function renderSheet(){
+    var t = model[0] && model[0].f;
+    document.getElementById('sheetTitle').textContent =
+      ((t && t.h1) ? t.h1 + ' — ' : '') + 'Cheat sheet';
+    document.getElementById('sheetBody').innerHTML = groups().map(function(g){
+      var words = g.words.length
+        ? '<ul class="wl">' + g.words.map(function(w){
+            return '<li>' + esc(w[0] || '') + '<b>' + inline(w[1] || '') + '</b>' +
+                   esc(w[2] || '') + '</li>';
+          }).join('') + '</ul>'
+        : '';
+      return '<section class="grp' + (g.opt ? ' opt' : '') +
+             '" style="--rail:var(--' + g.rail + ')"><h2>' + esc(g.title) +
+             (g.jp ? '<span class="kj">' + inline(g.jp) + '</span>' : '') + '</h2>' +
+             '<ul class="ph">' + g.items.map(function(it){
+               return '<li><span class="r">' + inline(it[0]) + '</span>' +
+                      '<span class="j">' + inline(it[1]) + '</span>' +
+                      '<span class="e">' + inline(it[2]) + '</span></li>';
+             }).join('') + '</ul>' + words + '</section>';
+    }).join('');
+  }
+
+  var sheetOpen = false;
+  function openSheet(){
+    if(sheetOpen) return;
+    sheetOpen = true;
+    renderSheet();
+    document.getElementById('sheet').hidden = false;
+    document.body.classList.add('sheet-open');
+    if(location.hash !== '#sheet'){ try { history.replaceState(null, '', '#sheet'); } catch(e){} }
+    window.scrollTo(0, 0);
+  }
+  function closeSheet(){
+    if(!sheetOpen) return;
+    sheetOpen = false;
+    document.getElementById('sheet').hidden = true;
+    document.body.classList.remove('sheet-open');
+    show(i);
+  }
+  function toggleSheet(){ sheetOpen ? closeSheet() : openSheet(); }
+
   /* ---------------- render ---------------- */
   function render(){
     DECK.innerHTML = model.map(function(s, si){
@@ -781,6 +957,7 @@ eyebrow: Words you will hear in a Japanese service
                 (s.f.sec ? F(si, 'sec', 'div', 'sec', 'section') : '');
       var body = RENDER[s.type] ? RENDER[s.type](si)
         : '<div class="fatal">Unknown slide type "' + esc(s.type) + '"</div>';
+      if(s.f.link) body += jumpHTML(si);
       return '<section class="slide' + (s.type === 'practice' ? ' practice' : '') +
              (s.type === 'title' ? ' title' : '') + (s.type === 'divider' ? ' divider' : '') +
              (s.f.opt ? ' optional' : '') +
@@ -819,7 +996,7 @@ eyebrow: Words you will hear in a Japanese service
     bar.style.width = ((i + 1) / slides.length * 100) + '%';
     bar.style.background = getComputedStyle(slides[i]).getPropertyValue('--rail');
     document.getElementById('num').textContent = (i + 1) + ' / ' + slides.length;
-    try { history.replaceState(null, '', '#' + (i + 1)); } catch(e){}
+    if(!sheetOpen){ try { history.replaceState(null, '', '#' + (i + 1)); } catch(e){} }
   }
 
   /* ---------------- load ---------------- */
@@ -876,6 +1053,10 @@ eyebrow: Words you will hear in a Japanese service
     var clone = document.documentElement.cloneNode(true);
     clone.querySelector('#content').textContent = serialize(model);
     clone.querySelector('#deck').innerHTML = '';
+    clone.querySelector('#sheetBody').innerHTML = '';
+    clone.querySelector('#sheetTitle').textContent = '';
+    clone.querySelector('#sheet').hidden = true;
+    clone.querySelector('body').classList.remove('sheet-open');
     clone.querySelector('#status').classList.remove('show');
     clone.querySelector('body').classList.remove('editing');
     var blob = new Blob(['<!doctype html>\n' + clone.outerHTML], {type: 'text/html'});
@@ -903,6 +1084,11 @@ eyebrow: Words you will hear in a Japanese service
     if(e.key === 'Escape' && editing){ e.preventDefault(); setEditing(false); return; }
     if(typing) return;
     if(e.metaKey || e.ctrlKey || e.altKey) return;
+    if(e.key === 'c' || e.key === 'C'){ e.preventDefault(); toggleSheet(); return; }
+    if(sheetOpen){
+      if(e.key === 'Escape'){ e.preventDefault(); location.hash = '#' + (i + 1); }
+      return;
+    }
     switch(e.key){
       case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown':
         e.preventDefault(); show(i + 1); break;
@@ -920,6 +1106,15 @@ eyebrow: Words you will hear in a Japanese service
         break;
     }
   });
+
+  window.addEventListener('hashchange', function(){
+    var h = (location.hash || '').slice(1);
+    if(h === 'sheet'){ openSheet(); return; }
+    closeSheet();
+    var nn = parseInt(h, 10);
+    if(!isNaN(nn)) show(nn - 1);
+  });
+  document.getElementById('btnPrint').onclick = function(){ window.print(); };
 
   var rt;
   window.addEventListener('resize', function(){
@@ -940,7 +1135,8 @@ eyebrow: Words you will hear in a Japanese service
     x0 = null;
   }, {passive: true});
 
-  show(isNaN(START) ? 0 : START - 1);
+  if(START_ROUTE === 'sheet') openSheet();
+  else show(isNaN(START) ? 0 : START - 1);
 })();
 </script>
 </body>
