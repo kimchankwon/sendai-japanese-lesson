@@ -45,9 +45,11 @@ A Slide after the conclusion that is not part of the 60 minutes and is skipped b
 Currently only the Christian invitation and gospel-vocabulary phrases live here. Visually
 marked so the teacher can see at a glance that it is optional. _Avoid_: "appendix", "bonus".
 
-## Core Eighteen
-The 18 phrases drilled inside the hour. Fixed count: cutting a phrase is how a new phrase gets
-added, so that repetition time is never silently traded away for coverage.
+## Core Twenty
+The 20 phrases drilled inside the hour: 4 greetings, 2 name, 2 study, 2 work, 2 hobby,
+4 breakdown, 3 church words, 1 self-identification. Was the Core Eighteen until work got its
+own two Phrase Slides. The count is meant to be argued over before it grows again — every
+addition spends repetition time, which is the scarce thing in a 60-minute lesson, not slides.
 
 ## Content Block
 The plain-text `<script id="content">` region of `index.html` holding every word in the

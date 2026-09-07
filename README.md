@@ -61,11 +61,11 @@ failing silently.
 
 ## What's in it
 
-37 slides across nine sections: Expectations, About Sendai, Greetings, Your name, What you
-study, Your hobby, When you're stuck, Church words, Put it together — plus three optional
-"If time" slides at the end.
+40 slides across nine sections: Expectations, About Sendai, Greetings, Your name, What you
+study or do, Your hobby, When you're stuck, Church words, Put it together — then a reminders
+slide, and three optional "If time" slides at the end.
 
-Eighteen phrases are drilled inside the hour (the **Core Eighteen**). Six prompt-only
+Twenty phrases are drilled inside the hour (the **Core Twenty**). Six prompt-only
 **Practice Slides** are spaced through the deck; the teacher runs the timing.
 
 Every phrase shows romaji first and largest, then Japanese with furigana, then English —
