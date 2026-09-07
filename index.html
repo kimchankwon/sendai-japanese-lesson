@@ -16,7 +16,8 @@
     --f-kana:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",Meiryo,sans-serif;
     --f-ui:"Helvetica Neue",Arial,sans-serif;
     --f-mono:"SF Mono","Menlo","Consolas",monospace;
-    --u:clamp(10px,1.35vmin,20px);
+    --u0:clamp(12px,1.78vmin,28px);
+    --u:var(--u0);
   }
   *{box-sizing:border-box}
   html,body{height:100%}
@@ -28,10 +29,11 @@
   .deck{position:fixed; inset:0}
   .slide{
     position:absolute; inset:0; display:none;
-    padding:calc(var(--u)*4) calc(var(--u)*6) calc(var(--u)*7) calc(var(--u)*11);
+    padding:calc(var(--u)*3.4) calc(var(--u)*5.5) calc(var(--u)*6.2) calc(var(--u)*10.5);
     flex-direction:column; justify-content:center;
   }
   .slide.on{display:flex}
+  .inner{display:flex; flex-direction:column; width:100%; min-width:0}
   .slide::before{
     content:""; position:absolute; left:0; top:0; bottom:0; width:calc(var(--u)*1.1);
     background:linear-gradient(180deg,var(--rail),color-mix(in oklab,var(--rail) 35%,var(--ground)));
@@ -43,7 +45,7 @@
   }
 
   .eyebrow{
-    font-size:calc(var(--u)*1.25); font-weight:700; letter-spacing:.26em;
+    font-size:calc(var(--u)*1.4); font-weight:700; letter-spacing:.26em;
     text-transform:uppercase; color:var(--muted); margin-bottom:calc(var(--u)*2);
   }
   h1{
@@ -67,67 +69,67 @@
   }
   .jp{font-family:var(--f-jp); font-size:calc(var(--u)*4.2); line-height:1.9; color:var(--rail)}
   .jp rt{font-family:var(--f-kana); font-size:.4em; color:var(--muted); letter-spacing:.04em; font-weight:400}
-  .en{font-size:calc(var(--u)*2.1); color:var(--ink-dim); letter-spacing:.01em}
+  .en{font-size:calc(var(--u)*2.4); color:var(--ink-dim); letter-spacing:.01em}
   .note{
-    margin-top:calc(var(--u)*1.4); font-size:calc(var(--u)*1.6); color:var(--muted);
+    margin-top:calc(var(--u)*1.6); font-size:calc(var(--u)*1.85); color:var(--muted);
     line-height:1.65; max-width:44ch; border-left:2px solid var(--hair);
     padding-left:calc(var(--u)*1.6);
   }
   .note rt{font-family:var(--f-kana); font-size:.44em}
 
   .toc{list-style:none; margin:0; padding:0; display:grid; gap:calc(var(--u)*1.15);
-       grid-template-columns:1fr 1fr; max-width:78ch}
+       grid-template-columns:1fr 1fr; max-width:calc(var(--u)*84)}
   .toc li{
     display:flex; align-items:baseline; gap:calc(var(--u)*1.6);
-    font-size:calc(var(--u)*2.2); color:var(--ink-dim);
-    padding:calc(var(--u)*.7) 0; border-bottom:1px solid var(--hair);
+    font-size:calc(var(--u)*2.4); color:var(--ink-dim);
+    padding:calc(var(--u)*.75) 0; border-bottom:1px solid var(--hair);
   }
-  .toc .n{font-variant-numeric:tabular-nums; font-size:calc(var(--u)*1.35);
+  .toc .n{font-variant-numeric:tabular-nums; font-size:calc(var(--u)*1.5);
           letter-spacing:.14em; color:var(--muted); font-weight:700; min-width:2.4ch}
   .toc .j{font-family:var(--f-jp); color:var(--muted); font-size:.86em}
 
   .bullets{list-style:none; margin:0; padding:0; display:flex;
-           flex-direction:column; gap:calc(var(--u)*2.6); max-width:40ch}
-  .bullets li{font-size:calc(var(--u)*2.7); line-height:1.4; color:var(--ink);
+           flex-direction:column; gap:calc(var(--u)*2.3); max-width:calc(var(--u)*72)}
+  .bullets li{font-size:calc(var(--u)*2.9); line-height:1.4; color:var(--ink);
               padding-left:calc(var(--u)*2.4); position:relative}
   .bullets li::before{content:""; position:absolute; left:0; top:.62em;
     width:calc(var(--u)*1.1); height:2px; background:var(--rail)}
-  .bullets .d{display:block; font-size:calc(var(--u)*1.75); color:var(--muted);
+  .bullets .d{display:block; font-size:calc(var(--u)*1.95); color:var(--muted);
               margin-top:calc(var(--u)*.7); line-height:1.6}
 
-  .vocab{list-style:none; margin:calc(var(--u)*2) 0 0; padding:0; display:grid;
+  .vocab{list-style:none; margin:calc(var(--u)*1.6) 0 0; padding:0; display:grid;
          grid-template-columns:repeat(3,minmax(0,1fr));
-         gap:calc(var(--u)*1.4) calc(var(--u)*3); max-width:86ch}
+         gap:calc(var(--u)*1.4) calc(var(--u)*3); max-width:calc(var(--u)*84)}
   .vocab li{border-top:1px solid var(--hair); padding-top:calc(var(--u)*1);
             font-family:var(--f-disp); font-weight:700; letter-spacing:-.01em;
-            font-size:calc(var(--u)*2.5); color:var(--ink)}
+            font-size:calc(var(--u)*2.65); color:var(--ink)}
   .vocab .k{display:block; font-family:var(--f-jp); font-weight:400;
-            font-size:calc(var(--u)*1.9); color:var(--rail); margin-top:.15em}
+            font-size:calc(var(--u)*2.05); color:var(--rail); margin-top:.15em}
   .vocab .k rt{font-family:var(--f-kana); font-size:.42em; color:var(--muted)}
   .vocab .g{display:block; font-family:var(--f-ui); font-weight:400;
-            font-size:calc(var(--u)*1.45); color:var(--muted); margin-top:.3em}
+            font-size:calc(var(--u)*1.6); color:var(--muted); margin-top:.3em}
 
-  .chips{display:flex; flex-wrap:wrap; gap:calc(var(--u)*1); margin-top:calc(var(--u)*3)}
-  .chips li{list-style:none; font-family:var(--f-jp); font-size:calc(var(--u)*1.85);
+  .chips{display:flex; flex-wrap:wrap; gap:calc(var(--u)*1); margin-top:calc(var(--u)*2.2)}
+  .chips li{list-style:none; font-family:var(--f-jp); font-size:calc(var(--u)*2);
             padding:calc(var(--u)*.55) calc(var(--u)*1.4);
             border:1px solid var(--hair); border-radius:999px; color:var(--ink-dim)}
   .chips .g{color:var(--muted); font-family:var(--f-ui); font-size:.72em;
             margin-left:.6em; letter-spacing:.06em}
 
   .facts{list-style:none; margin:calc(var(--u)*1.4) 0 0; padding:0; display:grid;
-         grid-template-columns:1fr 1fr; gap:calc(var(--u)*2.2) calc(var(--u)*4.5); max-width:88ch}
-  .facts li{border-top:1px solid var(--hair); padding-top:calc(var(--u)*1.1)}
-  .facts .t{display:block; font-family:var(--f-jp); font-size:calc(var(--u)*2.6);
+         grid-template-columns:1fr 1fr; gap:calc(var(--u)*1.9) calc(var(--u)*4.5); max-width:calc(var(--u)*84)}
+  .facts li{border-top:1px solid var(--hair); padding-top:calc(var(--u)*.9)}
+  .facts .t{display:block; font-family:var(--f-jp); font-size:calc(var(--u)*2.75);
             color:var(--rail); line-height:1.5}
   .facts .t rt{font-family:var(--f-kana); font-size:.4em; color:var(--muted)}
   .facts .r{display:block; font-family:var(--f-disp); font-weight:700; letter-spacing:.02em;
-            font-size:calc(var(--u)*1.5); color:var(--ink-dim); margin-top:.15em}
-  .facts .d{display:block; font-size:calc(var(--u)*1.6); color:var(--muted);
-            line-height:1.6; margin-top:calc(var(--u)*.7); max-width:36ch}
+            font-size:calc(var(--u)*1.65); color:var(--ink-dim); margin-top:.15em}
+  .facts .d{display:block; font-size:calc(var(--u)*1.78); color:var(--muted);
+            line-height:1.6; margin-top:calc(var(--u)*.7); max-width:42ch}
 
   .practice{background:var(--raised)}
   .tag{display:inline-flex; align-items:center; gap:calc(var(--u)*1.1);
-       font-weight:700; font-size:calc(var(--u)*1.3); letter-spacing:.26em;
+       font-weight:700; font-size:calc(var(--u)*1.45); letter-spacing:.26em;
        text-transform:uppercase; color:var(--ground); background:var(--rail);
        padding:calc(var(--u)*.6) calc(var(--u)*1.5); align-self:flex-start;
        margin-bottom:calc(var(--u)*3)}
@@ -135,16 +137,16 @@
   .task{font-family:var(--f-disp); font-weight:700; letter-spacing:-.015em;
         font-size:calc(var(--u)*4.6); line-height:1.22; max-width:24ch; margin:0; text-wrap:balance}
   .task em{font-style:normal; color:var(--rail)}
-  .foot{margin-top:calc(var(--u)*3.4); font-size:calc(var(--u)*1.7);
+  .foot{margin-top:calc(var(--u)*3.4); font-size:calc(var(--u)*1.9);
         color:var(--muted); letter-spacing:.04em}
 
-  .divider{align-items:flex-start}
+  .divider .inner{align-items:flex-start}
   .jptitle{font-family:var(--f-jp); font-size:calc(var(--u)*9); line-height:1.1;
            color:var(--rail); margin:0 0 calc(var(--u)*1.5); letter-spacing:.08em}
   .jptitle rt{font-family:var(--f-kana); font-size:.28em; color:var(--muted)}
   .divider .sub{font-family:var(--f-disp); font-weight:700;
                 font-size:calc(var(--u)*3.2); letter-spacing:.02em; color:var(--ink)}
-  .divider .count{margin-top:calc(var(--u)*2.6); font-size:calc(var(--u)*1.5);
+  .divider .count{margin-top:calc(var(--u)*2.6); font-size:calc(var(--u)*1.65);
                   color:var(--muted); letter-spacing:.2em; text-transform:uppercase; font-weight:700}
 
   .optional{background:
@@ -153,13 +155,15 @@
   .flag{align-self:flex-start; display:inline-flex; align-items:center; gap:calc(var(--u)*1);
         border:1px dashed var(--kin); color:var(--kin);
         padding:calc(var(--u)*.55) calc(var(--u)*1.4); margin-bottom:calc(var(--u)*2.6);
-        font-size:calc(var(--u)*1.25); font-weight:700; letter-spacing:.24em; text-transform:uppercase}
+        font-size:calc(var(--u)*1.4); font-weight:700; letter-spacing:.24em; text-transform:uppercase}
   .flag .j{font-family:var(--f-jp); font-weight:400; letter-spacing:.16em}
 
   .title{padding-left:calc(var(--u)*11); justify-content:center}
   .streamers{position:absolute; inset:0; overflow:hidden; pointer-events:none}
-  .streamers i{position:absolute; top:-12%; width:calc(var(--u)*2.4); height:124%;
-    border-radius:999px; opacity:.2; transform-origin:top center;
+  .streamers i{position:absolute; top:-14%; width:calc(var(--u)*1.5); height:118%;
+    border-radius:999px; opacity:.16; transform-origin:top center;
+    -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 38%,transparent 92%);
+    mask-image:linear-gradient(180deg,#000 0%,#000 38%,transparent 92%);
     animation:sway 9s ease-in-out infinite}
   @keyframes sway{
     0%,100%{transform:rotate(-1.6deg) translateY(0)}
@@ -186,11 +190,10 @@
         font-size:calc(var(--u)*1.25); color:var(--hair); letter-spacing:.16em;
         text-transform:uppercase; font-weight:700; z-index:5}
 
-  .slide.on > *:not(.sec):not(.streamers){animation:rise .46s cubic-bezier(.2,.7,.3,1) backwards}
-  .slide.on > *:nth-child(2){animation-delay:.05s}
-  .slide.on > *:nth-child(3){animation-delay:.12s}
-  .slide.on > *:nth-child(4){animation-delay:.19s}
-  .slide.on > *:nth-child(5){animation-delay:.26s}
+  .slide.on .inner > *{animation:rise .46s cubic-bezier(.2,.7,.3,1) backwards}
+  .slide.on .inner > *:nth-child(2){animation-delay:.07s}
+  .slide.on .inner > *:nth-child(3){animation-delay:.14s}
+  .slide.on .inner > *:nth-child(4){animation-delay:.21s}
   .card > *{animation:rise .5s cubic-bezier(.2,.7,.3,1) backwards}
   .card > *:nth-child(2){animation-delay:.11s}
   .card > *:nth-child(3){animation-delay:.2s}
@@ -213,7 +216,7 @@
   body.editing [contenteditable]:empty::before{
     content:attr(data-ph); color:var(--hair); font-style:italic;
   }
-  body.editing .slide.on > *{animation:none !important}
+  body.editing .inner > *{animation:none !important}
   body.editing .card > *{animation:none !important}
 
   .status{
@@ -309,11 +312,11 @@ sec: 仙台
 eyebrow: About Sendai · 02
 h2: What Sendai is known for.
 - 杜{もり}の都{みやこ} | Mori no Miyako | Sendai's name for itself. Zelkova trees line the main streets.
-- 伊達政宗{だてまさむね} | Date Masamune | Founded the city in 1600. He lost an eye to smallpox as a child and was nicknamed the One-Eyed Dragon.
-- 支倉常長{はせくらつねなが} | Hasekura Tsunenaga | Masamune's envoy. He sailed to Mexico, Spain and Rome in 1613 and was baptised there. Japan had banned Christianity by the time he got home.
-- 牛{ぎゅう}タン | Gyuutan | Grilled beef tongue. A Sendai chef started serving it in 1948 and it became the city's signature dish.
-- ずんだ餅{もち} | Zunda mochi | Rice cakes topped with sweet mashed edamame. Bright green, and sweeter than it looks.
-- 七夕{たなばた}まつり | Tanabata matsuri | Held every August. Paper streamers hang three storeys down through the shopping arcades. It is the largest Tanabata festival in Japan.
+- 伊達政宗{だてまさむね} | Date Masamune | Founded the city in 1600. Nicknamed the One-Eyed Dragon after losing an eye to smallpox.
+- 支倉常長{はせくらつねなが} | Hasekura Tsunenaga | Masamune's envoy. Baptised in Rome in 1613, while Japan was busy banning the faith.
+- 牛{ぎゅう}タン | Gyuutan | Grilled beef tongue. Invented here in 1948 and now the city's signature dish.
+- ずんだ餅{もち} | Zunda mochi | Rice cakes under sweet mashed edamame. Bright green.
+- 七夕{たなばた}まつり | Tanabata matsuri | Every August. The largest Tanabata festival in Japan; streamers hang three storeys down.
 
 === divider | aoba
 jp: あいさつ
@@ -598,6 +601,8 @@ eyebrow: Words you will hear in a Japanese service
 (function(){
   'use strict';
   var KEY = 'sendai-deck-v1';
+  /* read before any render — show() rewrites the hash */
+  var START = parseInt((location.hash || '').slice(1), 10);
   var SRC  = document.getElementById('content');
   var DECK = document.getElementById('deck');
   var model = [], i = 0, editing = false, dirty = false;
@@ -678,9 +683,17 @@ eyebrow: Words you will hear in a Japanese service
   }
   function rows(si, ln){ return (model[si].L[ln] || []); }
 
+  function streamers(){
+    var cols = ['sakura','kin','aoba','sora','murasaki','hi'],
+        xs = [8,15,23,79,86,93], out = '';
+    for(var k = 0; k < 6; k++)
+      out += '<i style="left:' + xs[k] + '%;background:var(--' + cols[k] +
+             ');animation-delay:-' + (k * 1.3 + 0.4).toFixed(1) + 's"></i>';
+    return '<div class="streamers">' + out + '</div>';
+  }
+
   function chrome(si){
     var s = model[si], out = '';
-    if(s.f.sec) out += F(si, 'sec', 'div', 'sec', 'section');
     if(s.f.flag){
       var p = s.f.flag.split('|');
       out += '<div class="flag" data-i="' + si + '" data-f="flag"' + ce('If time') + '>' +
@@ -694,13 +707,7 @@ eyebrow: Words you will hear in a Japanese service
   /* ---------------- renderers ---------------- */
   var RENDER = {
     title: function(si){
-      var cols = ['sakura','kin','aoba','sora','murasaki','hi'],
-          xs = [8,15,23,79,86,93], st = '';
-      for(var k = 0; k < 6; k++)
-        st += '<i style="left:' + xs[k] + '%;background:var(--' + cols[k] +
-              ');animation-delay:-' + (k * 1.3 + 0.4).toFixed(1) + 's"></i>';
-      return '<div class="streamers">' + st + '</div>' +
-             F(si,'kanji','div','kanji','仙台') +
+      return F(si,'kanji','div','kanji','仙台') +
              F(si,'h1','h1','','Title') +
              F(si,'sub','div','sub','Subtitle', true);
     },
@@ -770,14 +777,36 @@ eyebrow: Words you will hear in a Japanese service
   /* ---------------- render ---------------- */
   function render(){
     DECK.innerHTML = model.map(function(s, si){
+      var pre = (s.type === 'title' ? streamers() : '') +
+                (s.f.sec ? F(si, 'sec', 'div', 'sec', 'section') : '');
       var body = RENDER[s.type] ? RENDER[s.type](si)
         : '<div class="fatal">Unknown slide type "' + esc(s.type) + '"</div>';
       return '<section class="slide' + (s.type === 'practice' ? ' practice' : '') +
              (s.type === 'title' ? ' title' : '') + (s.type === 'divider' ? ' divider' : '') +
              (s.f.opt ? ' optional' : '') +
-             '" style="--rail:var(--' + s.rail + ')">' + body + '</section>';
+             '" style="--rail:var(--' + s.rail + ')">' + pre +
+             '<div class="inner">' + body + '</div></section>';
     }).join('');
     show(i);
+  }
+
+  /* Shrink a slide only as far as it must go to fit. Type is set large by
+     default; the dense grids scale themselves back down from there. */
+  function fit(slide){
+    if(!slide) return;
+    var inner = slide.querySelector('.inner');
+    if(!inner) return;
+    slide.style.removeProperty('--u');
+    var k = 1;
+    for(var pass = 0; pass < 8; pass++){
+      var cs = getComputedStyle(slide),
+          avail = slide.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom),
+          need = inner.getBoundingClientRect().height;
+      if(!(avail > 0) || need <= avail + 0.5) break;
+      k = Math.max(0.55, k * Math.max(0.88, avail / need));
+      slide.style.setProperty('--u', 'calc(var(--u0) * ' + k.toFixed(4) + ')');
+      if(k <= 0.55) break;
+    }
   }
 
   function show(n){
@@ -785,6 +814,7 @@ eyebrow: Words you will hear in a Japanese service
     if(!slides.length) return;
     i = Math.max(0, Math.min(slides.length - 1, n));
     for(var k = 0; k < slides.length; k++) slides[k].classList.toggle('on', k === i);
+    fit(slides[i]);
     var bar = document.getElementById('bar');
     bar.style.width = ((i + 1) / slides.length * 100) + '%';
     bar.style.background = getComputedStyle(slides[i]).getPropertyValue('--rail');
@@ -891,6 +921,14 @@ eyebrow: Words you will hear in a Japanese service
     }
   });
 
+  var rt;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){ fit(DECK.children[i]); }, 120);
+  });
+  if(document.fonts && document.fonts.ready)
+    document.fonts.ready.then(function(){ fit(DECK.children[i]); });
+
   var x0 = null;
   document.addEventListener('touchstart', function(e){
     if(editing) return; x0 = e.changedTouches[0].clientX;
@@ -902,8 +940,7 @@ eyebrow: Words you will hear in a Japanese service
     x0 = null;
   }, {passive: true});
 
-  var start = parseInt((location.hash || '').slice(1), 10);
-  show(isNaN(start) ? 0 : start - 1);
+  show(isNaN(START) ? 0 : START - 1);
 })();
 </script>
 </body>

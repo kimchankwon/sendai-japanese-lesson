@@ -69,3 +69,13 @@ asterisks visible — never the rendered form, so what is typed is what is store
 The export from Edit Mode: serialises the in-memory model back into Content Block syntax,
 splices it into a clone of the page, and downloads a complete replacement `index.html`.
 _Avoid_: "publish", "deploy" — it downloads a file; committing it is a separate act.
+
+## Slide Unit
+`--u`, the single length every type size, gap and padding in the Deck is a multiple of.
+`--u0` is the root value; a Slide may override `--u` below it to fit. Nothing in the
+stylesheet sets a px font-size, so one number changes the whole Deck's scale.
+
+## Auto-fit
+The measure-and-shrink pass run on a Slide when it becomes visible: if its content is taller
+than the Slide, `--u` is scaled down until it fits, then left alone. Sparse Slides therefore
+render at full size and dense ones only give up what they must. It never scales *up*.
