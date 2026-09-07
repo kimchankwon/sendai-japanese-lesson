@@ -28,7 +28,8 @@ page, grouped by section. It is linked from the title slide and from the closing
 reminders slide, reachable with `C` from anywhere, and has a Print button that switches
 to black-on-white in two columns.
 
-It is **generated from the same content block as the slides**, so it cannot fall out of
+On a phone it drops to one column with a compact sticky header, so the phrases stay
+thumb-scrollable in the street. It is **generated from the same content block as the slides**, so it cannot fall out of
 step with them. Add a phrase to the deck and it appears on the sheet; there is no second
 copy to maintain. Any slide can link to it by adding `link: <button label>`.
 

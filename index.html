@@ -258,7 +258,8 @@
 
   /* ---------- cheat sheet ---------- */
   .sheet{position:fixed; inset:0; overflow-y:auto; background:var(--ground);
-         display:none; z-index:10; padding:0 0 6vh}
+         display:none; z-index:10; padding:0 0 6vh;
+         -webkit-overflow-scrolling:touch; overscroll-behavior:contain}
   body.sheet-open{overflow:auto}
   body.sheet-open .sheet{display:block}
   body.sheet-open .deck,body.sheet-open .bar,
@@ -278,9 +279,11 @@
     font-family:var(--f-ui); font-weight:700; font-size:.78rem; letter-spacing:.18em;
     text-transform:uppercase; text-decoration:none; cursor:pointer;
     color:var(--muted); background:transparent; border:1px solid var(--hair);
-    border-radius:999px; padding:.5rem 1.1rem;
+    border-radius:999px; padding:0 1.1rem;
+    display:inline-flex; align-items:center; min-height:44px;
   }
   .sheet-top a:hover,.sheet-top button:hover{color:var(--aoba); border-color:var(--aoba)}
+  .sheet-top .sm{display:none}
   .sheet-top a:focus-visible,.sheet-top button:focus-visible{outline:2px solid var(--kin); outline-offset:2px}
   .sheet-body{
     padding:2rem clamp(1.2rem,4vw,4rem) 0;
@@ -310,6 +313,33 @@
   .wl b{display:block; font-family:var(--f-jp); font-weight:400;
         font-size:1.02rem; color:var(--ink-dim)}
   .wl b rt{font-family:var(--f-kana); font-size:.42em; color:var(--muted)}
+
+  @media (max-width:640px){
+    .sheet-top{
+      align-items:center; gap:.6rem; padding:.7rem 1rem;
+      flex-wrap:nowrap;
+    }
+    .sheet-top h1{font-size:1.05rem; letter-spacing:0; min-width:0;
+                  overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+    .sheet-top .deckname{display:none}
+    .sheet-top a,.sheet-top button{font-size:.66rem; letter-spacing:.12em;
+                                   padding:0 .85rem; flex:0 0 auto}
+    .sheet-top .lg{display:none}
+    .sheet-top .sm{display:inline}
+    .sheet-body{columns:1; padding:1.3rem 1rem 0}
+    .grp{margin-bottom:1.8rem}
+    .ph{gap:1.1rem}
+    .ph .r{font-size:1.1rem}
+    .ph .j{font-size:1.24rem}
+    .ph .e{font-size:.94rem}
+    .wl{grid-template-columns:1fr 1fr; gap:.75rem .9rem; margin-top:1rem}
+    .wl li{font-size:.84rem}
+    .wl b{font-size:1.06rem}
+  }
+  @media (max-width:380px){
+    .wl{grid-template-columns:1fr}
+    .sheet-top #btnPrint{display:none}
+  }
 
   @media print{
     body{background:#fff; color:#111; overflow:visible}
@@ -685,7 +715,7 @@ eyebrow: Words you will hear in a Japanese service
   <div class="sheet-top">
     <h1><span class="kj">仙台</span><span id="sheetTitle"></span></h1>
     <button id="btnPrint">Print</button>
-    <a href="#1" id="btnBack">Back to slides</a>
+    <a href="#1" id="btnBack"><span class="lg">Back to slides</span><span class="sm">Slides</span></a>
   </div>
   <div class="sheet-body" id="sheetBody"></div>
 </div>
@@ -911,8 +941,9 @@ eyebrow: Words you will hear in a Japanese service
 
   function renderSheet(){
     var t = model[0] && model[0].f;
-    document.getElementById('sheetTitle').textContent =
-      ((t && t.h1) ? t.h1 + ' — ' : '') + 'Cheat sheet';
+    document.getElementById('sheetTitle').innerHTML =
+      ((t && t.h1) ? '<span class="deckname">' + esc(t.h1) + ' \u2014 </span>' : '') +
+      'Cheat sheet';
     document.getElementById('sheetBody').innerHTML = groups().map(function(g){
       var words = g.words.length
         ? '<ul class="wl">' + g.words.map(function(w){
@@ -939,7 +970,7 @@ eyebrow: Words you will hear in a Japanese service
     document.getElementById('sheet').hidden = false;
     document.body.classList.add('sheet-open');
     if(location.hash !== '#sheet'){ try { history.replaceState(null, '', '#sheet'); } catch(e){} }
-    window.scrollTo(0, 0);
+    document.getElementById('sheet').scrollTop = 0;
   }
   function closeSheet(){
     if(!sheetOpen) return;
@@ -1126,10 +1157,10 @@ eyebrow: Words you will hear in a Japanese service
 
   var x0 = null;
   document.addEventListener('touchstart', function(e){
-    if(editing) return; x0 = e.changedTouches[0].clientX;
+    if(editing || sheetOpen) return; x0 = e.changedTouches[0].clientX;
   }, {passive: true});
   document.addEventListener('touchend', function(e){
-    if(x0 === null || editing) return;
+    if(x0 === null || editing || sheetOpen) return;
     var dx = e.changedTouches[0].clientX - x0;
     if(Math.abs(dx) > 55) show(i + (dx < 0 ? 1 : -1));
     x0 = null;

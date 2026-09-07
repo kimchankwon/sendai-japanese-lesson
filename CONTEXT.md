@@ -88,6 +88,9 @@ render from and holds no copy of its own, so it cannot drift. Reached by `C`, or
 Slide carrying a `link:` field. _Avoid_: "handout", "reference page" — and never let it
 become a second place phrases are written down.
 
+It is read in three places and each has to hold: a projector (three columns), a phone in the
+street (one column, compact header, 44px targets), and paper (two columns, black on white).
+
 ## Route
 The part of the URL hash that selects a view: a slide number, or `sheet`. It must be read
 once before the first render, because `show()` rewrites the hash as soon as a slide is
