@@ -25,11 +25,12 @@ A prompt-only exercise Slide: it states the task the pairs perform and shows no 
 ## Concept Slide
 A Slide carrying an idea rather than language — the Expectations slides, the TOC, the conclusion.
 
-## Maru Maru
-まるまる — the spoken blank in a Fill Frame, the way an English speaker says "blah blah" or "such-and-such". Used to teach a pattern before its vocabulary.
-
 ## Fill Frame
-A sentence pattern taught with Maru Maru in the slot, then reused with real vocabulary. `Shumi wa __ desu` is a Fill Frame. _Avoid_: "template sentence", "pattern drill".
+A sentence pattern with a blank where the vocabulary goes, taught before the vocabulary that
+fills it. `Shumi wa __ desu` is a Fill Frame. The blank is written `__` in both the romaji and
+the Japanese line and renders as a styled gap. _Avoid_: "template sentence", "pattern drill".
+The Deck used to speak the blank aloud as まるまる (maru maru); that was dropped, so don't
+reintroduce it in one slide without doing all of them.
 
 ## Romaji-Primary
 The rule that Romaji is the visually dominant line on every Phrase Card, because this cohort cannot read kana and has 60 minutes. Kana and furigana are present for exposure and for the trip, not for in-lesson decoding.
